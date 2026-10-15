@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Coin Hero 2D"
+description = "A Hindi-friendly 2D platform game where players collect coins, avoid roaming enemies, and reach the finish gate across increasingly challenging levels."
+version = "1.0.0"
+id = "artifacts/coin-hero-2d"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 20464
+
+[services.development]
+run = "pnpm --filter @workspace/coin-hero-2d run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/coin-hero-2d", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/coin-hero-2d/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "20464"
+BASE_PATH = "/"
